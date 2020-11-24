@@ -12,7 +12,7 @@ def draw_small(x: int, y: int, dwg: svgwrite.Drawing):
     paragraph.add(dwg.text("20°", (x+100, y+80), text_anchor="middle"))
 
     image = dwg.add(
-        dwg.image(href=("/Users/mkrawcak/weather-station/meteocons-icons/SVG/2.svg"), insert=(10 + x, 100 + y), size=(90 * px, 90 * px)))
+        dwg.image(href=("../meteocons-icons/SVG/2.svg"), insert=(10 + x, 100 + y), size=(90 * px, 90 * px)))
 
     pressure_text = dwg.add(dwg.g(font_size=32, font_family="Helvetica"))
     pressure_text.add(dwg.text("1023 hPa ↗", (100 + x, 120 + y)))
