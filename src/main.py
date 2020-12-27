@@ -2,9 +2,9 @@ import datetime
 import subprocess
 import time
 
-from PIL.Image import Image
+from PIL import Image
 
-from epaper import epd7in5b_HD
+# from epaper import epd7in5b_HD
 import argparse
 from typing import List
 
@@ -104,4 +104,4 @@ if __name__ == "__main__":
     # blackimage = Image.open(r'7in5_HD_b.bmp')
     # redimage = Image.open(r'7in5_HD_b.bmp')
     epd.display(epd.getbuffer(im), epd.getbuffer(im))
-    time.sleep(1)
+    # time.sleep(1)
