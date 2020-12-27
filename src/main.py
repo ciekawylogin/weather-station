@@ -3,7 +3,7 @@ import subprocess
 
 from PIL import Image
 
-# from epaper import epd7in5b_HD
+from epaper import epd7in5b_HD
 import argparse
 from typing import List
 
