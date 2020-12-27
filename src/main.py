@@ -1,5 +1,9 @@
 import datetime
 import subprocess
+import time
+
+from PIL.Image import Image
+
 from epaper import epd7in5b_HD
 import argparse
 from typing import List
