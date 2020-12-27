@@ -1,14 +1,9 @@
 import datetime
-from typing import Iterable
-
-import sys
-
-from yr import YR
-
 import subprocess
-from PIL import Image
-from epaper import epd7in5b_HD
+# from epaper import epd7in5b_HD
 import argparse
+from typing import List
+
 import yaml
 
 from airquality.air_quality_provider import AirQualityProvider
@@ -29,7 +24,7 @@ def make_air_quality_provider(config: dict) -> AirQualityProvider:
     return air_quality_providers.make_provider(config['provider'], config)
 
 
-def make_calendars(config: list) -> list[AbstractCalendar]:
+def make_calendars(config: list) -> List[AbstractCalendar]:
     return [make_calendar(calendar) for calendar in config]
 
 
@@ -50,7 +45,7 @@ if __name__ == "__main__":
         _config = yaml.load(file, Loader=yaml.FullLoader)
 
         print(_config)
-        all_entries: list[CalendarEntry] = []
+        all_entries: List[CalendarEntry] = []
         cals = [make_calendar(cal_config) for cal_config in _config['calendars']]
         for cal in cals:
             all_entries += cal.get_entries(hours = 240)

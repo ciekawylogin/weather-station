@@ -1,7 +1,10 @@
 O365~=2.0.11
 svgwrite~=1.4
 Pillow~=8.0.1
-yr~=0.5
+python-yr~=1.4
 pyairvisual~=5.0.4
 PyYAML~=5.3.1
 humanize~=3.2.0
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib

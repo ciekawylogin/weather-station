@@ -1,4 +1,5 @@
 import datetime
+from typing import Iterable, Tuple
 
 import svgwrite
 from svgwrite import px
@@ -10,29 +11,29 @@ from weather.weather_forecast import WeatherForecast
 
 
 def draw_big(x: int, y: int, dwg: svgwrite.Drawing, weather: WeatherForecast, air_quality: AirQuality):
-
     shapes = dwg.add(dwg.g(id='shapes'))
 
     shapes.add(dwg.rect(insert=(x, y), size=(360 * px, 300 * px),
                         fill='white', stroke='black', stroke_width=1))
 
     paragraph = dwg.add(dwg.g(font_size=120))
-    paragraph.add(dwg.text(f"{weather.temperature}°", (x + 240, y+ 110), text_anchor="middle"))
+    paragraph.add(dwg.text(f"{weather.temperature}°", (x + 240, y + 110), text_anchor="middle"))
 
     image = dwg.add(
-        dwg.image(href=(f"/Users/mkrawcak/weather-station/icons/{weather.summary.value}.svg"), insert=(x+5, y+5), size=(120 * px, 120 * px)))
+        dwg.image(href=(f"/Users/mkrawcak/weather-station/icons/{weather.summary.value}.svg"), insert=(x + 5, y + 5),
+                  size=(120 * px, 120 * px)))
 
     feels_like_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
-    feels_like_text.add(dwg.text(f"Air quality: {air_quality}", (x+10, y+165)))
+    feels_like_text.add(dwg.text(f"Air quality: {air_quality}", (x + 10, y + 165)))
 
     wind_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
-    wind_text.add(dwg.text(f"{weather.wind_name} {weather.wind_mps} m/s", (x+10, y+205), textLength=340))
+    wind_text.add(dwg.text(f"{weather.wind_name} {weather.wind_mps} m/s", (x + 10, y + 205), textLength=340))
 
     precipitation_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
-    precipitation_text.add(dwg.text(f"{weather.precip_name} {weather.precip_mm} mm", (x+10, y+245)))
+    precipitation_text.add(dwg.text(f"{weather.precip_name} {weather.precip_mm} mm", (x + 10, y + 245)))
 
     pressure_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
-    pressure_text.add(dwg.text(f"{int(weather.air_pressure)} hPa", (x+10, y+285)))
+    pressure_text.add(dwg.text(f"{int(weather.air_pressure)} hPa", (x + 10, y + 285)))
 
 
 def draw_small(x: int, y: int, dwg: svgwrite.Drawing, time: str, weather: WeatherForecast):
@@ -45,7 +46,7 @@ def draw_small(x: int, y: int, dwg: svgwrite.Drawing, time: str, weather: Weathe
     date_text.add(dwg.text(time, (10 + x, 35 + y)))
 
     paragraph = dwg.add(dwg.g(font_size=55))
-    paragraph.add(dwg.text(f"{weather.temperature}°", (x+135, y+90), text_anchor="middle"))
+    paragraph.add(dwg.text(f"{weather.temperature}°", (x + 135, y + 90), text_anchor="middle"))
 
     image = dwg.add(
         dwg.image(href=("/Users/mkrawcak/weather-station/meteocons-icons/SVG/18.svg"),
@@ -54,8 +55,9 @@ def draw_small(x: int, y: int, dwg: svgwrite.Drawing, time: str, weather: Weathe
     pressure_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
     pressure_text.add(dwg.text(f"{int(weather.air_pressure)} hPa", (10 + x, 130 + y)))
 
+
 def draw_calendar(x: int, y: int, dwg: svgwrite.Drawing,
-                  lines: list[str]):
+                  lines: Iterable[str]):
     shapes = dwg.add(dwg.g())
 
     shapes.add(dwg.rect(insert=(x, y), size=(460 * px, 330 * px),
@@ -67,7 +69,9 @@ def draw_calendar(x: int, y: int, dwg: svgwrite.Drawing,
         date_text.add(dwg.text(line, (10 + x, offset + y)))
         offset += 40
 
-def draw(filename: str, entries: list[CalendarEntry], weather: list[(datetime.datetime, WeatherForecast)], quality: AirQuality) -> None:
+
+def draw(filename: str, entries: Iterable[CalendarEntry], weather: Iterable[Tuple[datetime.datetime, WeatherForecast]],
+         quality: AirQuality) -> None:
     dwg = svgwrite.Drawing(filename=filename, debug=True, size=(880 * px, 528 * px))
     bg = dwg.add(dwg.g(id='bg'))
     bg.add(dwg.rect(insert=(0 * px, 0 * px), size=(880 * px, 528 * px),
@@ -79,15 +83,14 @@ def draw(filename: str, entries: list[CalendarEntry], weather: list[(datetime.da
 
     calendar_entries: list[str] = []
     for entry in entries[:4]:
-        formatted_delta = humanize.precisedelta(entry.length).replace("and", "") # TODO: make it more concise
+        formatted_delta = humanize.precisedelta(entry.length).replace("and", "")  # TODO: make it more concise
 
         time = "Ongoing" if entry.start.replace(tzinfo=None) < datetime.datetime.now() else \
             humanize.naturaltime(entry.start.replace(tzinfo=None)) if entry.start.date() != datetime.date.today() \
-            else f"{entry.start.strftime('%H:%M')}, {formatted_delta}"
+                else f"{entry.start.strftime('%H:%M')}, {formatted_delta}"
         calendar_entries.append(f"{time}")
         calendar_entries.append(f"{entry.title[:24]}{'...' if len(entry.title) > 24 else ''}")
 
     draw_calendar(400, 180, dwg, calendar_entries)
 
     dwg.save()
-

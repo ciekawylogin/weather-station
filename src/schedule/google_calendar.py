@@ -1,6 +1,7 @@
 import datetime
 import pickle
 import os.path
+from typing import List, Dict
 
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -14,7 +15,7 @@ class GoogleCalendar(AbstractCalendar):
     # If modifying these scopes, delete the token file
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-    def __init__(self, config: dict):
+    def __init__(self, config: Dict):
 
         self.calendar_name = config['name']
         self.token_file = config['token-file']
@@ -41,7 +42,7 @@ class GoogleCalendar(AbstractCalendar):
 
         self.service = build('calendar', 'v3', credentials=self.creds)
 
-    def get_entries(self, hours: int = 24) -> list[CalendarEntry]:
+    def get_entries(self, hours: int = 24) -> List[CalendarEntry]:
         if hours is None:
             hours = self.hours
         now = datetime.datetime.utcnow()
@@ -54,7 +55,7 @@ class GoogleCalendar(AbstractCalendar):
         return [self.convert_entry(item) for item in events]
 
     @staticmethod
-    def convert_entry(entry: dict) -> CalendarEntry:
+    def convert_entry(entry: Dict) -> CalendarEntry:
         start_time_txt = entry['start'].get('dateTime', entry['start'].get('date'))
         start_time = datetime.datetime.fromisoformat(start_time_txt)
 

@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from O365 import Account, MSGraphProtocol, calendar, FileSystemTokenBackend
 import datetime
 
@@ -9,7 +11,7 @@ class OutlookCalendar(AbstractCalendar):
     client_id: str = None
     secret_id: str = None
 
-    def __init__(self, config: dict):
+    def __init__(self, config: Dict):
         self.client_id = config['client-id']
         self.secret_id = config['secret-id']
         self.calendar_name = config['name']
@@ -27,7 +29,7 @@ class OutlookCalendar(AbstractCalendar):
         else:
             print("Skipping authentication because token already exists")
 
-    def get_entries(self, hours: int = None) -> list[CalendarEntry]:
+    def get_entries(self, hours: int = None) -> List[CalendarEntry]:
         if hours is None:
             hours = self.hours
         schedule = self.account.schedule()

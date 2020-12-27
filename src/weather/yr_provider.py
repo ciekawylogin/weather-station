@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
-from yr import YR
+from yr.libyr import Yr
 import datetime
 
 from weather.weather_forecast import WeatherForecast
@@ -16,11 +16,11 @@ class YrProvider(WeatherProvider):
         self.refresh_period = datetime.timedelta(minutes=config['refresh'])
         self.location = config['location']
 
-    cached_forecasts: list[WeatherForecast] = None
+    cached_forecasts: List[WeatherForecast] = None
     last_refresh: datetime.datetime = None
 
     def refresh_cache(self):
-        weather = YR(location=self.location)
+        weather = Yr(location_name=self.location)
         self.cached_forecasts = [self.convert_forecast(forecast) for forecast in weather.forecast(as_json=False)]
         self.last_refresh = datetime.datetime.now()
 
