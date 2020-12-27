@@ -87,7 +87,7 @@ if __name__ == "__main__":
     subprocess.run(["convert", "-size", "880x528", "-depth", "1", "example.svg", "example.bmp"])
 
     # open method used to open different extension image file
-    # im = Image.open(r"example.bmp")
+    im = Image.open(r"example.bmp")
 
     # im.show()
 
@@ -99,5 +99,5 @@ if __name__ == "__main__":
     # # logging.info("3.read bmp file...")
     # blackimage = Image.open(r'7in5_HD_b.bmp')
     # redimage = Image.open(r'7in5_HD_b.bmp')
-    epd.display(epd.getbuffer(blackimage), epd.getbuffer(redimage))
+    epd.display(epd.getbuffer(im), epd.getbuffer(im))
     time.sleep(1)
