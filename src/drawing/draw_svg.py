@@ -11,7 +11,8 @@ from schedule.calendar_entry import CalendarEntry
 from weather.weather_forecast import WeatherForecast
 
 
-def draw_big(x: int, y: int, dwg: svgwrite.Drawing, weather: WeatherForecast, air_quality: AirQuality, icons_location: str):
+def draw_big(x: int, y: int, dwg: svgwrite.Drawing, weather: WeatherForecast, air_quality: AirQuality,
+             icons_location: str):
     shapes = dwg.add(dwg.g(id='shapes'))
 
     shapes.add(dwg.rect(insert=(x, y), size=(360 * px, 300 * px),
@@ -32,7 +33,7 @@ def draw_big(x: int, y: int, dwg: svgwrite.Drawing, weather: WeatherForecast, ai
     wind_text.add(dwg.text(f"{weather.wind_name} {weather.wind_mps} m/s", (x + 10, y + 205), textLength=340))
 
     precipitation_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
-    precipitation_text.add(dwg.text(f"{weather.precip_name} {weather.precip_mm} mm", (x + 10, y + 245)))
+    precipitation_text.add(dwg.text(f"{weather.precip_name} {weather.precip_mm} mm/h", (x + 10, y + 245)))
 
     pressure_text = dwg.add(dwg.g(font_size=36, font_family="Helvetica"))
     pressure_text.add(dwg.text(f"{int(weather.air_pressure)} hPa", (x + 10, y + 285)))

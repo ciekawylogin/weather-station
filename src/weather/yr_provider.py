@@ -20,10 +20,8 @@ class YrProvider(WeatherProvider):
     last_refresh: datetime.datetime = None
 
     def refresh_cache(self):
-        weather = Yr(location_name=self.location)
+        weather = Yr(location_name=self.location, forecast_link="forecast_hour_by_hour")
         weather_forecast = weather.forecast(as_json=False)
-        for forecast in weather_forecast:
-            print (forecast)
         self.cached_forecasts = [self.convert_forecast(forecast) for forecast in weather_forecast]
         self.last_refresh = datetime.datetime.now()
 
@@ -35,7 +33,7 @@ class YrProvider(WeatherProvider):
     def convert_summary(yr_summary) -> WeatherSummary:
         return SUMMARY_MAPPING.get(yr_summary, WeatherSummary.UNKNOWN)
 
-    def get_current_weather(self) -> Optional[WeatherForecast]:
+    def get_current_weather(self) -> WeatherForecast:
         self.refresh_cache_if_old()
         return self.cached_forecasts[0]
 
@@ -84,12 +82,12 @@ SUMMARY_MAPPING = {
     '49': WeatherSummary.LIGHT_SNOW,
     '50': WeatherSummary.HEAVY_SNOW,
     '04': WeatherSummary.CLOUDY,
-    '09': WeatherSummary.HEAVY_RAIN,
+    '09': WeatherSummary.LIGHT_RAIN,
     '01d': WeatherSummary.CLEAR_SKY_DAY,
     '02d': WeatherSummary.PARTLY_CLOUDY_DAY,
     '03d': WeatherSummary.PARTLY_CLOUDY_DAY,
     '40d': WeatherSummary.LIGHT_RAIN,
-    '05d': WeatherSummary.HEAVY_RAIN,
+    '05d': WeatherSummary.LIGHT_RAIN,
     '41d': WeatherSummary.HEAVY_RAIN,
     '42d': WeatherSummary.LIGHT_SNOW,
     '07d': WeatherSummary.HEAVY_SNOW,
@@ -110,7 +108,7 @@ SUMMARY_MAPPING = {
     '02n': WeatherSummary.PARTLY_CLOUDY_NIGHT,
     '03n': WeatherSummary.PARTLY_CLOUDY_NIGHT,
     '40n': WeatherSummary.LIGHT_RAIN,
-    '05n': WeatherSummary.HEAVY_RAIN,
+    '05n': WeatherSummary.LIGHT_RAIN,
     '41n': WeatherSummary.HEAVY_RAIN,
     '42n': WeatherSummary.LIGHT_SNOW,
     '07n': WeatherSummary.HEAVY_SNOW,
