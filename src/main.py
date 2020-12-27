@@ -92,8 +92,8 @@ if __name__ == "__main__":
     # open method used to open different extension image file
     black_image = Image.open(r"example.bmp")
 
-    red_image = Image.new('1', (880, 528))
-
+    red_image = Image.new('1', (880, 528), color=1)
+   
     # im.show()
 
     epd = epd7in5b_HD.EPD()
@@ -102,7 +102,5 @@ if __name__ == "__main__":
     epd.Clear()
     #
     # # logging.info("3.read bmp file...")
-    # blackimage = Image.open(r'7in5_HD_b.bmp')
-    # redimage = Image.open(r'7in5_HD_b.bmp')
     epd.display(epd.getbuffer(black_image), epd.getbuffer(red_image))
     # time.sleep(1)
