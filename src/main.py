@@ -82,10 +82,6 @@ if __name__ == "__main__":
         print(air_quality)
 
 
-    # weather = Yr(location_name='Netherlands/Flevoland/Almere')
-    #
-    # for i in weather.forecast(as_json=True):
-    #     print(i)
     draw_svg.draw("example.svg", all_entries, weather, air_quality, _config['screen']['icons-location'])
     subprocess.run(["convert", "-size", "880x528", "-depth", "1", "example.svg", "example.bmp"])
 
@@ -93,7 +89,7 @@ if __name__ == "__main__":
     black_image = Image.open(r"example.bmp")
 
     red_image = Image.new('1', (880, 528), color=1)
-   
+
     # im.show()
 
     epd = epd7in5b_HD.EPD()

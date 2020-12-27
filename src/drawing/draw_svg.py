@@ -97,4 +97,8 @@ def draw(filename: str, entries: List[CalendarEntry], weather: List[Tuple[str, W
 
     draw_calendar(400, 180, dwg, calendar_entries)
 
+    paragraph = dwg.add(dwg.g(font_size=20))
+    paragraph.add(dwg.text(f"Last update: {datetime.datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}", (10, 500)))
+
+
     dwg.save()
