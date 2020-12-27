@@ -21,7 +21,10 @@ class YrProvider(WeatherProvider):
 
     def refresh_cache(self):
         weather = Yr(location_name=self.location)
-        self.cached_forecasts = [self.convert_forecast(forecast) for forecast in weather.forecast(as_json=False)]
+        weather_forecast = weather.forecast(as_json=False)
+        for forecast in weather_forecast:
+            print (forecast)
+        self.cached_forecasts = [self.convert_forecast(forecast) for forecast in weather_forecast]
         self.last_refresh = datetime.datetime.now()
 
     def refresh_cache_if_old(self):
