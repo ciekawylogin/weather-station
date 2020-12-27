@@ -1,6 +1,6 @@
 from typing import Optional
 
-from yr.libyr import Yr
+from yr import YR
 import datetime
 
 from weather.weather_forecast import WeatherForecast
@@ -20,7 +20,7 @@ class YrProvider(WeatherProvider):
     last_refresh: datetime.datetime = None
 
     def refresh_cache(self):
-        weather = Yr(location_name=self.location)
+        weather = YR(location=self.location)
         self.cached_forecasts = [self.convert_forecast(forecast) for forecast in weather.forecast(as_json=False)]
         self.last_refresh = datetime.datetime.now()
 

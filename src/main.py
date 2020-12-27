@@ -3,7 +3,7 @@ from typing import Iterable
 
 import sys
 
-from yr.libyr import Yr
+from yr import YR
 
 import subprocess
 from PIL import Image
