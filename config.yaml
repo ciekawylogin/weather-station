@@ -1,0 +1,26 @@
+screen:
+  refresh: 60 # refresh every 60 minutes
+
+air_quality:
+  provider: airvisual
+  api-key: "bcb34671-e56d-435b-9612-69046c46dca8"
+  latitude: 52.4013510305883
+  longitude: 5.286889885306898
+
+weather:
+  refresh: 60 # refresh weather forecast every 60 minutes
+  provider: yr
+  location: "Netherlands/Flevoland/Almere"
+
+calendars:
+  - type: "outlook"
+    name: "Calendar"
+    client-id: "f8fa701f-6ea8-4279-8c28-820d8a5042be"
+    secret-id: "8PNh67tx_~zGTL68c_2__PC53u1H3y__wZ"
+    token-file: "../credentials-outlook.json"
+    hours: 24
+  - type: "google"
+    name: "primary"
+    credentials-file: "../credentials-google.json"
+    token-file: "../token.pickle"
+    hours: 24
