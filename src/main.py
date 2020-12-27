@@ -1,6 +1,6 @@
 import datetime
 import subprocess
-# from epaper import epd7in5b_HD
+from epaper import epd7in5b_HD
 import argparse
 from typing import List
 
