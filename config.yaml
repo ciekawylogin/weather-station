@@ -1,5 +1,6 @@
 screen:
   refresh: 60 # refresh every 60 minutes
+  icons-location: "../icons"
 
 air_quality:
   provider: airvisual

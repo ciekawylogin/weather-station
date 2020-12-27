@@ -3,7 +3,7 @@ import subprocess
 
 from PIL import Image
 
-from epaper import epd7in5b_HD
+# from epaper import epd7in5b_HD
 import argparse
 from typing import List
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #
     # for i in weather.forecast(as_json=True):
     #     print(i)
-    draw_svg.draw("example.svg", all_entries, weather, air_quality)
+    draw_svg.draw("example.svg", all_entries, weather, air_quality, _config['screen']['icons-location'])
     subprocess.run(["convert", "-size", "880x528", "-depth", "1", "example.svg", "example.bmp"])
 
     # open method used to open different extension image file
